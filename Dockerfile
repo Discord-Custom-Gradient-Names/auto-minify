@@ -4,7 +4,7 @@ WORKDIR /app/
 
 COPY package.json /app/package.json
 
-RUN apk add --no-cache bash \
+RUN apk add --no-cache bash coreutils \
  && apk add --no-cache --upgrade grep \
  && npm install
 

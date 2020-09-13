@@ -4,7 +4,8 @@ WORKDIR /app/
 
 COPY package.json /app/package.json
 
-RUN apk add bash \
+RUN apk add --no-cache bash \
+ && apk add --no-cache --upgrade grep \
  && npm install
 
 ADD entrypoint.sh /entrypoint.sh

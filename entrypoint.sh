@@ -18,10 +18,10 @@ output_name () {
 	f_name=$( basename $1 | grep -oP '^.*(?=\.)' )
 	f_extn=$( basename $1 | grep -oP '\.[^\.]*$' )
 
-	f_dir=$( dirname $1 | xargs readlink -f )
+	f_dir=$( dirname $1 | xargs readlink -m )
 	# assume that in_dir is `js/*` directly, so we want
 	# first dirname or the list of its files inside it
-	in_path=$( dirname $in_dir | head -1 | xargs readlink -f )
+	in_path=$( dirname $in_dir | head -1 | xargs readlink -m )
 	# but if it is just a `js/`, we need its full path
 	# not just the dirname, but also the basename with it
 	if [ -d "${in_dir}" ]; then
@@ -35,7 +35,7 @@ output_name () {
 		mkdir -p $f_path
 	fi
 
-	echo "$f_path/$f_name.min$f_extn" | xargs readlink -f
+	echo "$f_path/$f_name.min$f_extn" | xargs readlink -m
 }
 
 find_files () {
@@ -118,7 +118,7 @@ minify_file () {
 	then checks if the command returned an error
 	if it did, program exits with that error code
 	'
-	file=$( readlink -f $1 )
+	file=$( readlink -m $1 )
 	out=$( output_name $file )
 
 	echo "Minify : $file -> $out"
